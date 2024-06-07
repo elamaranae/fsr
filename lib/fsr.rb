@@ -32,11 +32,11 @@ module Fsr
         "#{`pwd`.strip}/spec"
       ]
   )
-    Listen.to(*listen) { new(run, load: load).run }
+    Listen.to(*listen) { Fsr::Runner.new(run, load: load).run }
   end
 
   # core runner
-  class Core
+  class Runner
     def initialize(specs, load: [])
       @specs = specs
       @dependent_files = load
