@@ -36,7 +36,7 @@ module Fsr
   end
 
   # core runner
-  module Core
+  class Core
     def initialize(specs, load: [])
       @specs = specs
       @dependent_files = load
