@@ -25,7 +25,22 @@ module Fsr
         "#{`pwd`.strip}/spec"
       ].select { |dir| Dir.exist?(dir) }
   )
-    Listen.to(*listen) { Fsr::Runner.new(run, load: load).run }
+    Listen.to(*listen) do |modified, added|
+      load = [modified, added].compact.flatten if load.empty?
+      Fsr::Runner.new(run, load: load).run
+    end
+  end
+
+  def self.sandboxed
+    orig_world   = RSpec.world
+    orig_example = RSpec.current_example
+    RSpec.world  = RSpec::Core::World.new(RSpec.configuration)
+
+    yield
+  ensure
+    RSpec.world           = orig_world
+    RSpec.current_example = orig_example
+    RSpec.clear_examples
   end
 
   # core runner
@@ -37,27 +52,9 @@ module Fsr
 
     def run
       @dependent_files.each { |file| load(file) }
-      RSpec::Core::Runner.run(@specs)
-      cleanup
-    end
-
-    def cleanup
-      warn_level = $VERBOSE
-      $VERBOSE = nil
-      remove_rspec
-      require('rspec')
-      configure
-      $VERBOSE = warn_level
-    end
-
-    def remove_rspec
-      Object.send(:remove_const, 'RSpec')
-      $LOADED_FEATURES.reject! { |a| a.include?('rspec') }
-    end
-
-    def configure
-      load('spec/spec_helper.rb')
-      load('spec/rails_helper.rb')
+      Fsr.sandboxed do
+        RSpec::Core::Runner.run(@specs)
+      end
     end
   end
 end
