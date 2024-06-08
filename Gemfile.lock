@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fsr (0.1.5)
+    fsr (0.1.6)
       listen
 
 GEM
