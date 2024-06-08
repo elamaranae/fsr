@@ -2,6 +2,9 @@
 
 require_relative 'fsr/version'
 require 'listen'
+require 'rspec/core'
+
+$LOAD_PATH.push('spec')
 
 # Run RSpec fast by avoiding full app boot
 #
@@ -26,8 +29,8 @@ module Fsr
       ].select { |dir| Dir.exist?(dir) }
   )
     Listen.to(*listen) do |modified, added|
-      load = [modified, added].compact.flatten if load.empty?
-      Fsr::Runner.new(run, load: load).run
+      files = [modified, added].compact.flatten if load.empty?
+      Fsr::Runner.new(run, load: files).run
     end
   end
 
