@@ -49,6 +49,12 @@ By default, it listens for file change events on app/, lib/, spec/ directories. 
 Fsr.listen(['spec/models/user_spec.rb'], listen: ['dir/'])
 ```
 
+You can pass any RSpec command line arguments as array. For example, you can run multiple specs or run based on line number.
+
+```rb
+Fsr.listen(['spec/models/user_spec.rb:12'], listen: ['dir/'])
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/elamaranae/fsr. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/elamaranae/fsr/blob/master/CODE_OF_CONDUCT.md).
