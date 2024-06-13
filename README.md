@@ -1,4 +1,4 @@
-# fsr - *fast spec runner*
+# *fsr - fast spec runner*
 
 `fsr` listens for file change events and runs RSpecs automatically in rails console avoiding the rails boot process and provides instant feedback which is crucial for Test Driven Development (TDD).
 
