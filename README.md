@@ -1,6 +1,6 @@
 # fsr
 
-`fsr` listens for file change events and runs RSpecs automatically in rails console. This avoids the rails boot process and provides instant feedback which is crucial for Test Driven Development (TDD).
+`fsr` listens for file change events and runs RSpecs automatically in rails console avoiding the rails boot process and provides instant feedback which is crucial for Test Driven Development (TDD).
 
 ## Installation
 
@@ -41,6 +41,12 @@ To stop the listener,
 
 ```rb
 listener.stop
+```
+
+By default, it listens for file change events on app/, lib/, spec/ directories. This can be overriden by passing listen option.
+
+```rb
+Fsr.listen(['spec/models/user_spec.rb'], listen: ['dir/'])
 ```
 
 ## Contributing
