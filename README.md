@@ -28,8 +28,6 @@ Open rails console in test environment.
 
 All following examples should be run in this console.
 
-### Run a single spec
-
 ```rb
 listener = Fsr.listen(['spec/models/user_spec.rb'])
 listener.start
@@ -43,16 +41,22 @@ To stop the listener,
 listener.stop
 ```
 
-By default, it listens for file change events on app/, lib/, spec/ directories. This can be overriden by passing listen option.
+By default, it listens for file change events on `app/`, `lib/`, `spec/` directories. This can be overriden with `listen` option.
 
 ```rb
 Fsr.listen(['spec/models/user_spec.rb'], listen: ['dir/'])
 ```
 
-You can pass any RSpec command line arguments as array. For example, you can run multiple specs or run based on line number.
+You can pass any RSpec command line arguments. For example, to run based on line number.
 
 ```rb
-Fsr.listen(['spec/models/user_spec.rb:12'], listen: ['dir/'])
+Fsr.listen(['spec/models/user_spec.rb:12'])
+```
+
+To run based on line number.
+
+```rb
+Fsr.listen(['spec/models/user_spec.rb', 'spec/models/admin_spec.rb'])
 ```
 
 ## Contributing
